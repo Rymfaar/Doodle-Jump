@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Script/Camera.gd" type="Script" id=1]
+[ext_resource path="res://Scene/Background.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scene/Plateform.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scene/SpawnerPlateform.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scene/Player.tscn" type="PackedScene" id=5]
+
+[node name="World" type="Node"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 280, 400 )
+current = true
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
+script = ExtResource( 1 )
+PLAYER_PATH = NodePath("../Player")
+
+[node name="ParallaxBackground" parent="." instance=ExtResource( 2 )]
+
+[node name="Plateform" parent="." instance=ExtResource( 3 )]
+position = Vector2( 280, 600 )
+
+[node name="Container" type="Node" parent="."]
+
+[node name="SpawnerPlateform" parent="." instance=ExtResource( 4 )]
+CAMERA_PATH = NodePath("../Camera2D")
+FIRST_PLATEFORM_PATH = NodePath("../Plateform")
+PLATEFORM_CONTAINER = NodePath("../Container")
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
+position = Vector2( 280, 450 )
+[connection signal="body_entered" from="Player" to="Player" method="_on_Player_body_entered"]
